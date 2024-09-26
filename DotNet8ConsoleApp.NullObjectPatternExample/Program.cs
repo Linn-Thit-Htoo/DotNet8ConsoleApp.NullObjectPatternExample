@@ -1,56 +1,55 @@
-﻿namespace DotNet8ConsoleApp.NullObjectPatternExample
+﻿namespace DotNet8ConsoleApp.NullObjectPatternExample;
+
+public class Program
 {
-    public class Program
+    public static void Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            IStudent student = GetStudent(1);
+        IStudent student = GetStudent(1);
 
-            // Instead of checking for null, you can directly call the method
-            student.Study();
+        // Instead of checking for null, you can directly call the method
+        student.Study();
 
-            Console.ReadKey();
-        }
-
-        public static IStudent GetStudent(int id)
-        {
-            if (id == 1)
-            {
-                return new RealStudent { StudentId = 1, StudentName = "John Doe" };
-            }
-
-            return new NullObjectStudent();
-        }
+        Console.ReadKey();
     }
 
-    public interface IStudent
+    public static IStudent GetStudent(int id)
     {
-        public int StudentId { get; set; }
-        public string StudentName { get; set; }
-        void Study();
-    }
-
-    public class RealStudent : IStudent
-    {
-        public int StudentId { get; set; }
-        public string StudentName { get; set; }
-
-        public void Study()
+        if (id == 1)
         {
-            Console.WriteLine($"{StudentName} is studying...");
+            return new RealStudent { StudentId = 1, StudentName = "John Doe" };
         }
+
+        return new NullObjectStudent();
     }
+}
 
-    public class NullObjectStudent : IStudent
+public interface IStudent
+{
+    public int StudentId { get; set; }
+    public string StudentName { get; set; }
+    void Study();
+}
+
+public class RealStudent : IStudent
+{
+    public int StudentId { get; set; }
+    public string StudentName { get; set; }
+
+    public void Study()
     {
-        public int StudentId { get; set; } = 0;
-        public string StudentName { get; set; } = "Unknown Student";
+        Console.WriteLine($"{StudentName} is studying...");
+    }
+}
 
-        public NullObjectStudent() { }
+public class NullObjectStudent : IStudent
+{
+    public int StudentId { get; set; } = 0;
+    public string StudentName { get; set; } = "Unknown Student";
 
-        public void Study()
-        {
-            Console.WriteLine($"{StudentName} is studying...");
-        }
+    public NullObjectStudent() { }
+
+    public void Study()
+    {
+        Console.WriteLine($"{StudentName} is studying...");
     }
 }
